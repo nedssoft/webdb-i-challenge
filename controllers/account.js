@@ -67,9 +67,26 @@ const updateAccount = async (req, res, next) => {
     next(error);
   }
 };
+
+const getAccountById = async (req, res, next) => {
+  try {
+    const account = await findById(req.params.id);
+    if (account) {
+      return res.status(200).json({
+        message: 'OK',
+        account
+      })
+    } else {
+      throw new ErrorHandler(400, 'Account with the specified ID does not exist')
+    }
+  } catch (error) {
+    next(error)
+  }
+}
 module.exports = {
   getAllAccounts,
   createAccount,
   deleteAccount,
-  updateAccount
+  updateAccount,
+  getAccountById
 };
