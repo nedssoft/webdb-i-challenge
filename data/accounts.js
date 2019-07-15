@@ -20,6 +20,11 @@ async function update(id, account) {
   const updated = await db("accounts")
     .where({ id })
     .update(account);
+    if (updated) {
+      return updated
+    } else {
+      return null
+    }
 }
 
 async function remove(id) {
