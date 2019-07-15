@@ -12,6 +12,23 @@ const getAllAccounts = async (req, res, next) => {
   return res.status(200).json({ status: 'OK', accounts})
 }
 
+const createAccount = async (req, res, next) => {
+  try {
+    const id  = await createNewAccount(req.body)
+  if(id) {
+   const account = await findById(id)
+    return res.status(201).json({
+      status: 'OK',
+      account
+    })
+  }
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 module.exports = {
-  getAllAccounts
+  getAllAccounts,
+  createAccount
 }
