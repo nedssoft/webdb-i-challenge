@@ -23,9 +23,10 @@ async function update(id, account) {
 }
 
 async function remove(id) {
-  const updated = await db("accounts")
+  const deleted = await db("accounts")
     .where({ id })
     .del();
+  return deleted;
 }
 
 module.exports = {
@@ -34,4 +35,4 @@ module.exports = {
   update,
   remove,
   findById
-}
+};

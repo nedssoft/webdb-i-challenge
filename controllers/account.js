@@ -23,6 +23,25 @@ const createAccount = async (req, res, next) => {
     })
   }
   } catch (error) {
+    next(error)
+  }
+}
+
+const deleteAccount = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const account = await findById(id)
+    if (account) {
+      const deleted = await remove(id);
+      if (deleted) {
+        return res.status(200).json({
+          message: 'Account with the specified ID has been deleted'
+        })
+      }
+    } else {
+      throw new ErrorHandler(404, 'Account with the specified ID does not exist')
+    }
+  } catch (error) {
     console.log(error)
     next(error)
   }
@@ -30,5 +49,6 @@ const createAccount = async (req, res, next) => {
 
 module.exports = {
   getAllAccounts,
-  createAccount
+  createAccount,
+  deleteAccount
 }
